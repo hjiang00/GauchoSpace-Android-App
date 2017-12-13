@@ -8,15 +8,16 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"></ListView>
+        android:background="#fff"/>
 
     <TextView
         android:id="@+id/img_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="25dp"
-        android:background="@mipmap/add" />
+        android:background="@mipmap/add"
+        android:onClick="startAddcourse"/>
 
 </RelativeLayout>

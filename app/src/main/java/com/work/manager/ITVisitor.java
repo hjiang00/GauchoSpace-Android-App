@@ -3,14 +3,14 @@ package com.work.manager;
 import java.util.HashMap;
 
 public class ITVisitor {
-	HashMap<String, CourseInfo> courses = new HashMap<>();
+	static HashMap<String, CourseInfo> courses = new HashMap<>();
 	String currentWeek;
 	EventInfo currentEventInfo;
 	CourseInfo currentCourseInfo;
 	void indent() { currentEventInfo.description += "	";}
 	void nextline() { currentEventInfo.description += "\n";}
 	ITVisitor (UserNode ivtree){ ivtree.accept(this); }
-	HashMap<String, CourseInfo> Get_Info() { return courses; }
+	//HashMap<String, CourseInfo> Get_Info() { return courses; }
 	void VisitActivityNode (ActivityNode node){
 		currentWeek = node.name;
 		node.visit_children(this);

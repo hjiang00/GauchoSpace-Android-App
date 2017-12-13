@@ -19,6 +19,7 @@
         <activity android:name=".DashboardActivity" />
         <activity android:name=".AddCourseActivity" />
         <activity android:name=".CourseNameActivity" />
+        <activity android:name=".PageActivity" />
     </application>
 
 </manifest>
