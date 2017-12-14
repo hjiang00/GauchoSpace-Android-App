@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Gauchospace.iml" filepath="$PROJECT_DIR$/Gauchospace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GauchoSpace-Android-App.iml" filepath="$PROJECT_DIR$/GauchoSpace-Android-App.iml" />
+      <module fileurl="file://C:\Users\Jiang\Desktop\Android\GauchoSpace-Android-App\Gauchospace.iml" filepath="C:\Users\Jiang\Desktop\Android\GauchoSpace-Android-App\Gauchospace.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

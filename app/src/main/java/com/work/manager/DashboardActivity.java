@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ListView listView;
     private TextView imgBtn;
     private ItemThreeAdapter adapter;
+    private String coursename;
+    private String website;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,30 @@ public class DashboardActivity extends AppCompatActivity {
     }
     public void startAddcourse(View view){
         Intent intent = new Intent(this, AddCourseActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if(requestCode == RESULT_OK){
+                //GET NAME AND WEBSITE
+                coursename = data.getStringExtra("coursename");
+                website = data.getStringExtra("website");
+                //UPDATE Object list and save to data structure
+
+            }
+        }
+    }
+
+    //Clicking courses in the LISTVIEW
+    @Override
+    public void onClick(View view) {
+        //Identify if it is a link or not
+        Intent coursewebintent = new Intent(this, CourseWebsiteActivity.class);
+        coursewebintent.putExtra("url", website);
+        startActivity(coursewebintent);
     }
 }
