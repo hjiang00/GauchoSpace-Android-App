@@ -15,9 +15,9 @@ public class CourseWebsiteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_website);
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
-//        WebView myWebView = (WebView) findViewById(R.id.courseweb);
-//        myWebView.setWebViewClient(new WebViewClient());
-//        myWebView.loadUrl(url);
+        WebView myWebView = (WebView) findViewById(R.id.courseweb);
+        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.loadUrl(url);
     }
 
 

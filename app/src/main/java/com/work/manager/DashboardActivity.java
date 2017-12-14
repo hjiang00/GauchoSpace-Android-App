@@ -83,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         //Identify if it is a link or not
         Intent coursewebintent = new Intent(this, CourseWebsiteActivity.class);
-        coursewebintent.putExtra("url", website);
+//        coursewebintent.putExtra("url", website); SHOULD GET THE ADDRESS DIRECTLY FROM SPECIFIC OBJECT
         startActivity(coursewebintent);
     }
 }
