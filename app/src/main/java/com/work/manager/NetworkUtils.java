@@ -1,5 +1,6 @@
 package com.work.manager;
 
+import android.content.Intent;
 import android.util.Log;
 
 import org.jsoup.Connection;
@@ -7,6 +8,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import static com.work.manager.TwoActivity.coursemap;
+import static com.work.manager.TwoActivity.coursetitle;
 
 public class NetworkUtils {
     public static String cookie_retriever(String myusername, String mypassword){
@@ -53,6 +57,8 @@ public class NetworkUtils {
                     String linkText = link.text();
                     System.out.println(linkText);
                     System.out.println(linkHref);
+                    coursetitle.add(linkText);
+                    coursemap.put(linkText, linkHref);
                 }
             }
         }catch (Exception e){

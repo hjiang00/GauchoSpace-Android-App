@@ -17,6 +17,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.work.manager.TwoActivity.coursemap;
+import static com.work.manager.TwoActivity.coursetitle;
+
 public class DashboardActivity extends AppCompatActivity{
 
     private ListView listView;
@@ -24,8 +27,7 @@ public class DashboardActivity extends AppCompatActivity{
     private String coursename;
     private String website;
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> coursetitle = new ArrayList<>();
-    private HashMap<String,String> coursemap = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +37,16 @@ public class DashboardActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.list_view);
         imgBtn = (TextView) findViewById(R.id.img_btn);
-        coursetitle.add("CS184");
-        coursemap.put(coursetitle.get(0),"http://www.cs.ucsb.edu/~holl/CS184/");
+//        coursetitle.add("CS184");
+//        coursemap.put(coursetitle.get(0),"http://www.cs.ucsb.edu/~holl/CS184/");
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, coursetitle);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
         listView.setOnItemLongClickListener(onItemLongClickListener);
 
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        String password = intent.getStringExtra("password");
 
-        System.out.println(username);
-        System.out.println(password);
 
-        NodeConstructer nc = new NodeConstructer();
-        nc.execute(username,password);
+
 
     }
 

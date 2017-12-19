@@ -33,7 +33,7 @@ public class OneActivity extends AppCompatActivity {
     }
 
     public void setBtnLogin(View view){
-        Intent intent = new Intent(this, DashboardActivity.class);
+        Intent intent = new Intent(this, TwoActivity.class);
         etUsername = (EditText) findViewById(R.id.et_username);
         etPassword = (EditText) findViewById(R.id.et_password);
         String username = etUsername.getText().toString();
