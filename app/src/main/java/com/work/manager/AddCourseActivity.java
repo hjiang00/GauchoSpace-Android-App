@@ -45,7 +45,6 @@ public class AddCourseActivity extends AppCompatActivity {
                 intent.putExtra("coursename", name);
                 intent.putExtra("website", webaddress);
                 setResult(RESULT_OK, intent);
-//                Toast.makeText(AddCourseActivity.this, "A new course has been added to your Dashboard", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
