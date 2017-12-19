@@ -1,6 +1,7 @@
 package com.work.manager;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,6 +38,9 @@ public class DashboardActivity extends AppCompatActivity{
     private ArrayAdapter<String> adapter;
     private ArrayList<String> coursetitle = new ArrayList<>();
     private HashMap<String,String> coursemap = new HashMap<>();
+    private String username, password;
+    public String cookie;
+    public Document doc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,27 +50,78 @@ public class DashboardActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.list_view);
         imgBtn = (TextView) findViewById(R.id.img_btn);
-        coursetitle.add("CS184");
-        coursemap.put(coursetitle.get(0),"http://www.cs.ucsb.edu/~holl/CS184/");
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, coursetitle);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
         listView.setOnItemLongClickListener(onItemLongClickListener);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        String password = intent.getStringExtra("password");
+        username = intent.getStringExtra("username");
+        password = intent.getStringExtra("password");
 
         System.out.println(username);
         System.out.println(password);
 
-        String mycookie = cookie_retriever(username,password);
-        dashboard_parser(html_retriver("https://gauchospace.ucsb.edu/courses/my/",mycookie));
+//        String mycookie = cookie_retriever(username,password);
+//        dashboard_parser(html_retriver("https://gauchospace.ucsb.edu/courses/my/",mycookie));
 //        activity_parser(html_retriver("https://gauchospace.ucsb.edu/courses/course/view.php?id=19621",mycookie));
-        System.out.println("finished");
+//        new Getcookiehtml().execute();
 
     }
 
+    private class Getcookiehtml extends AsyncTask<Void, Void, Void>{
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                System.out.println(username);
+                System.out.println(password);
+                Connection.Response res = Jsoup.connect("https://gauchospace.ucsb.edu/courses/login/index.php")
+                        .data("Username", username, "Password", password,"anchor","")
+                        .method(Method.POST)
+                        .execute();
+                cookie = res.cookie("MoodleSessiontng28new");
+                System.out.println(cookie);
+                doc = Jsoup.connect("https://gauchospace.ucsb.edu/courses/my/")
+                        .cookie("MoodleSessiontng28new", cookie)
+                        .get();
+                System.out.println("finish retrieve");
+            }catch (Exception e){
+                String errorMessage = e.getMessage();
+                System.out.println(errorMessage);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dashboard_parser(doc);
+        }
+    }
+
+    private class Htmlretrieve extends AsyncTask<Void, Void, Void>{
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                doc = Jsoup.connect("https://gauchospace.ucsb.edu/courses/my/")
+                        .cookie("MoodleSessiontng28new", cookie)
+                        .get();
+                System.out.println("finish retrieve");
+            }catch (Exception e){
+                String errorMessage = e.getMessage();
+                System.out.println(errorMessage);
+                Document doc2 = Jsoup.parse("<html><head><title>First parse</title></head>"
+                        + "<body><p>Parsed HTML into a doc.</p></body></html>");
+                System.out.println("error");
+            }
+            return null;
+
+        }
+    }
 
 
     @Override
@@ -80,9 +135,10 @@ public class DashboardActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.Grades:
-                Intent intentgrades = new Intent(this, PageActivity.class);
-                intentgrades.putExtra("title", "Grades");
-                this.startActivity(intentgrades);
+//                Intent intentgrades = new Intent(this, PageActivity.class);
+//                intentgrades.putExtra("title", "Grades");
+//                this.startActivity(intentgrades);
+                new Getcookiehtml().execute();
                 break;
             case R.id.Deadlines:
                 Intent intentdeadlines = new Intent(this, PageActivity.class);
@@ -156,7 +212,7 @@ public class DashboardActivity extends AppCompatActivity{
     public static String cookie_retriever(String myusername, String mypassword){
         try{
             Connection.Response res = Jsoup.connect("https://gauchospace.ucsb.edu/courses/login/index.php")
-                    .data("username", myusername, "password", mypassword,"anchor","")
+                    .data("Username", myusername, "Password", mypassword,"anchor","")
                     .method(Method.POST)
                     .execute();
             Document doc = res.parse();
@@ -191,6 +247,7 @@ public class DashboardActivity extends AppCompatActivity{
     public static void dashboard_parser(Document doc){
         try{
             Elements contents = doc.getElementsByAttributeValue("class","course_title");
+            System.out.println("enter dashboard_parser");
             for (Element content : contents) {
                 Elements links = content.getElementsByTag("a");
                 for (Element link : links) {

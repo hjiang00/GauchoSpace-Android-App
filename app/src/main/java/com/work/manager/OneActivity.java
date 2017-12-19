@@ -10,6 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 public class OneActivity extends AppCompatActivity {
 
     private RelativeLayout activityMain;
@@ -28,6 +34,7 @@ public class OneActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.et_username);
         etPassword = (EditText) findViewById(R.id.et_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
+
     }
 
     public void setBtnLogin(View view){
@@ -42,4 +49,5 @@ public class OneActivity extends AppCompatActivity {
 
 
     }
+
 }
