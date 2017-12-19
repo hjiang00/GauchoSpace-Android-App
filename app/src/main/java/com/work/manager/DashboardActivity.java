@@ -17,17 +17,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.jsoup.Jsoup;
-import org.jsoup.Connection;
-import org.jsoup.Connection.Method;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import java.io.IOException;
-import java.io.File;
-import java.util.Arrays;
-import java.util.Map;
-
 public class DashboardActivity extends AppCompatActivity{
 
     private ListView listView;
@@ -60,14 +49,10 @@ public class DashboardActivity extends AppCompatActivity{
         System.out.println(username);
         System.out.println(password);
 
-        String mycookie = cookie_retriever(username,password);
-        dashboard_parser(html_retriver("https://gauchospace.ucsb.edu/courses/my/",mycookie));
-//        activity_parser(html_retriver("https://gauchospace.ucsb.edu/courses/course/view.php?id=19621",mycookie));
-        System.out.println("finished");
+        NodeConstructer nc = new NodeConstructer();
+        nc.execute(username,password);
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,7 +87,6 @@ public class DashboardActivity extends AppCompatActivity{
     public void startAddcourse(View view){
         Intent intent = new Intent(this, AddCourseActivity.class);
         startActivityForResult(intent, 1);
-
     }
 
     @Override
@@ -152,73 +136,5 @@ public class DashboardActivity extends AppCompatActivity{
             return false;
         }
     };
-
-    public static String cookie_retriever(String myusername, String mypassword){
-        try{
-            Connection.Response res = Jsoup.connect("https://gauchospace.ucsb.edu/courses/login/index.php")
-                    .data("username", myusername, "password", mypassword,"anchor","")
-                    .method(Method.POST)
-                    .execute();
-            Document doc = res.parse();
-            uri_get_title(doc);
-            String cookie = res.cookie("MoodleSessiontng28new");
-            System.out.println(cookie);
-            return cookie;
-        }catch (Exception e){
-            String errorMessage = e.getMessage();
-            System.out.println(errorMessage);
-            return errorMessage;
-        }
-    }
-
-    public static Document html_retriver(String uri, String Cookie){
-        try{
-            Document doc = Jsoup.connect(uri)
-                    .cookie("MoodleSessiontng28new", Cookie)
-                    .get();
-            System.out.println("finished2");
-            return doc;
-        }catch (Exception e){
-            String errorMessage = e.getMessage();
-            System.out.println(errorMessage);
-            Document doc2 = Jsoup.parse("<html><head><title>First parse</title></head>"
-                    + "<body><p>Parsed HTML into a doc.</p></body></html>");
-            System.out.println("error");
-            return doc2;
-        }
-    }
-
-    public static void dashboard_parser(Document doc){
-        try{
-            Elements contents = doc.getElementsByAttributeValue("class","course_title");
-            for (Element content : contents) {
-                Elements links = content.getElementsByTag("a");
-                for (Element link : links) {
-                    String linkHref = link.attr("href");
-                    String linkText = link.text();
-                    System.out.println(linkText);
-                    System.out.println(linkHref);
-                }
-            }
-        }catch (Exception e){
-            String errorMessage = e.getMessage();
-            System.out.println(errorMessage);
-        }
-    }
-
-    public static String uri_get_title(Document doc){
-        try{
-            String title = doc.title();
-            System.out.println(title);
-            return title;
-
-        }catch (Exception e){
-            String errorMessage = e.getMessage();
-            System.out.println(errorMessage);
-            System.out.println("error in get title");
-            return errorMessage;
-        }
-    }
-
 
 }
