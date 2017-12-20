@@ -26,7 +26,8 @@
         <activity android:name=".AddCourseActivity" />
         <activity android:name=".CourseNameActivity" />
         <activity android:name=".PageActivity" />
-        <activity android:name=".CourseWebsiteActivity"></activity>
+        <activity android:name=".CourseWebsiteActivity" />
+        <activity android:name=".CourseWebsiteActivity2"></activity>
     </application>
 
 </manifest>

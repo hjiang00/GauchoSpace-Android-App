@@ -10,12 +10,24 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import static com.work.manager.TwoActivity.coursemap;
 import static com.work.manager.TwoActivity.coursetitle;
 
 public class NetworkUtils {
+    public static ArrayList<String> coursename = new ArrayList<>();
+    public static ArrayList<String> coursename2 = new ArrayList<>();
+    public static ArrayList<String> hwname = new ArrayList<>();
+    public static ArrayList<Integer> hwcount = new ArrayList<>();
+    public static ArrayList<String> hwdeadlines = new ArrayList<>();
+    public static ArrayList<String> hwdetail = new ArrayList<>();
+    public static ArrayList<String> coursegrade = new ArrayList<>();
+    public static int count;
+
     public static String cookie_retriever(String myusername, String mypassword){
         try{
             Connection.Response res = Jsoup.connect("https://gauchospace.ucsb.edu/courses/login/index.php")
@@ -61,6 +73,7 @@ public class NetworkUtils {
                     System.out.println(linkText);
                     System.out.println(linkHref);
                     userNode.courses.add(new CourseNode(linkText,linkHref));
+                    coursename.add(linkText);
                     coursetitle.add(linkText);
                     coursemap.put(linkText, linkHref);
                 }
@@ -102,11 +115,13 @@ public class NetworkUtils {
                         if(activityNodeIteratorIter.hasNext()){
 
                             if(ishomework){
+                                count++;
                                 HWNode hwnode = new HWNode();
                                 hwnode.name = eventname;
                                 hwnode.link = webNode.uri.toString();
                                 hwnode.description.add(webNode);
                                 System.out.println(eventname);
+                                hwname.add(eventname);
                                 activityNodeIteratorIter.next().events.add(hwnode);
                             }
                             else{
@@ -117,6 +132,7 @@ public class NetworkUtils {
                                 activityNodeIteratorIter.next().events.add(slidesNode);
                             }
                         }
+
                     }
                 }
             }
@@ -138,6 +154,7 @@ public class NetworkUtils {
                             case "Submission status":
                                 hwNode.SubmissionStatus = new TextNode(key_string.nextElementSibling().text());
                                 System.out.println(key_string.nextElementSibling().text());
+                                hwdetail.add(hwNode.SubmissionStatus.name);
                                 break;
                             case "Grading status":
                                 hwNode.GradingStatus = new TextNode(key_string.nextElementSibling().text());
@@ -146,6 +163,7 @@ public class NetworkUtils {
                             case "Due date":
                                 hwNode.DueDate = new TextNode(key_string.nextElementSibling().text());
                                 System.out.println(key_string.nextElementSibling().text());
+                                hwdeadlines.add(hwNode.DueDate.name);
                                 break;
                             default:
                                 break;
@@ -174,13 +192,17 @@ public class NetworkUtils {
                             courseNodeIterator.next().gradepagelink = linkHref;
                             System.out.println(linkText);
                             System.out.println(linkHref);
+                            coursename2.add(linkText);
                         }
                     }
                 }
                 Elements course_grade = course_grades.getElementsByAttributeValue("class","cell c1");
                 for (Element grade : course_grade) {
                     String grade_string = grade.text();
-                    if(grade_string != null && !grade_string.isEmpty()) {System.out.println(grade_string);}
+                    if(grade_string != null && !grade_string.isEmpty()) {
+                        System.out.println(grade_string);
+                        coursegrade.add(grade_string);
+                    }
                 }
             }
 

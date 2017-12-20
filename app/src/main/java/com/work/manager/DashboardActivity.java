@@ -108,10 +108,13 @@ public class DashboardActivity extends AppCompatActivity{
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             String checktype = adapterView.getItemAtPosition(i).toString();
             if (checktype.contains("Self")){
-            Intent coursewebintent = new Intent(DashboardActivity.this, CourseWebsiteActivity.class);
-            coursewebintent.putExtra("url", coursemap.get(checktype));
-            Log.d("url", coursemap.get(checktype));
-            startActivity(coursewebintent);
+            Intent courseweb2intent = new Intent(DashboardActivity.this, CourseWebsiteActivity2.class);
+            courseweb2intent.putExtra("url", coursemap.get(checktype));
+            startActivity(courseweb2intent);
+            }else{
+                Intent coursewebintent = new Intent(DashboardActivity.this, CourseWebsiteActivity.class);
+                coursewebintent.putExtra("url", coursemap.get(checktype));
+                startActivity(coursewebintent);
             }
         }
     };

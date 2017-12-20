@@ -41,8 +41,11 @@ public class OneActivity extends AppCompatActivity {
         intent.putExtra("username", username);
         intent.putExtra("password", password);
         startActivity(intent);
-
-
     }
 
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//    }
 }

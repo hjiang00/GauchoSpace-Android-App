@@ -35,6 +35,6 @@ public class TwoActivity extends AppCompatActivity {
                 startActivity(intent1);
                 finish();
             }
-        },10000);
+        },20000);
     }
 }
