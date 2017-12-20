@@ -3,6 +3,10 @@ package com.work.manager;
 import java.util.ArrayList;
 public class ActivityNode extends ITNode{
 	ArrayList<EventNode> events;
+	ActivityNode (String name){
+		this.name = name;
+		this.events = new ArrayList<>();
+	}
 	ActivityNode (String name, ArrayList<EventNode> events){
 		this.name = name;
 		this.events = events;

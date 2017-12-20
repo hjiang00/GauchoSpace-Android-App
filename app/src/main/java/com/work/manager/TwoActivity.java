@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TwoActivity extends AppCompatActivity {
+    public static UserNode userNode = new UserNode();
     public static ArrayList<String> coursetitle = new ArrayList<>();
     public static HashMap<String,String> coursemap = new HashMap<>();
     @Override

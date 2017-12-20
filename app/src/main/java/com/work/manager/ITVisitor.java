@@ -20,6 +20,12 @@ public class ITVisitor {
 		courses.put(node.name,currentCourseInfo);
 		node.visit_children(this);
 	}
+	void VisitSlidesNode(EventNode node){
+		currentEventInfo = new EventInfo();
+		currentEventInfo.weekid = currentWeek;
+
+		node.visit_children(this);
+	}
 	void VisitHWNode (HWNode node){
 		currentEventInfo = new EventInfo();
 		currentEventInfo.weekid = currentWeek;

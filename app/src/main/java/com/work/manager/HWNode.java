@@ -6,11 +6,17 @@ public class HWNode extends EventNode{
 	TextNode SubmissionStatus;
 	TextNode GradingStatus;
 	TextNode DueDate;
-	HWNode (String name, 
+	String link;
+	HWNode(){
+		this.ifHWNode = true;
+		this.description = new ArrayList<>();
+	}
+	HWNode (String name,
 			ArrayList<DescriptionNode> description,
 			TextNode SubmissionStatus,
 			TextNode GradingStatus,
 			TextNode DueDate){
+		this.ifHWNode = true;
 		this.name = name;
 		this.description = description;
 		this.SubmissionStatus = SubmissionStatus;

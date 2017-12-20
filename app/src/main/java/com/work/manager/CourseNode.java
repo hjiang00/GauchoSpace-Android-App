@@ -3,14 +3,15 @@ package com.work.manager;
 import java.util.ArrayList;
 import java.util.HashMap;
 public class CourseNode extends ITNode{
-	public ArrayList<DescriptionNode> description;
+	public String link;
+	public String gradepagelink;
 	public ArrayList<ActivityNode> activities;
-	public HashMap<String,HWNode> deadlines;
+	public HashMap<String,String> deadlines;//
 	public HashMap<String,String> grades;
-	CourseNode(String name, ArrayList<DescriptionNode> description, ArrayList<ActivityNode> activities){
+	CourseNode(String name, String link){
 		this.name = name;
-		this.description = description;
-		this.activities = activities;
+		this.link = link;
+		this.activities = new ArrayList<>();
 	}
 	@Override
 	void accept(ITVisitor visitor) {
@@ -18,7 +19,6 @@ public class CourseNode extends ITNode{
 	}
 	@Override
 	void visit_children(ITVisitor visitor) {
-		for (int i=0; i <description.size(); i++) description.get(i).accept(visitor);
 		for (int i=0; i <activities.size(); i++) activities.get(i).accept(visitor);
 	}
 }

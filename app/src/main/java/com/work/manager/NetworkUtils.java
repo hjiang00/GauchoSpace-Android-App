@@ -1,6 +1,7 @@
 package com.work.manager;
 
 import android.content.Intent;
+import java.net.URI;
 import android.util.Log;
 
 import org.jsoup.Connection;
@@ -8,6 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.Iterator;
 
 import static com.work.manager.TwoActivity.coursemap;
 import static com.work.manager.TwoActivity.coursetitle;
@@ -47,7 +50,7 @@ public class NetworkUtils {
         }
     }
 
-    public static void dashboard_parser(Document doc){
+    public static void dashboard_parser(Document doc,UserNode userNode){
         try{
             Elements contents = doc.getElementsByAttributeValue("class","course_title");
             for (Element content : contents) {
@@ -57,6 +60,7 @@ public class NetworkUtils {
                     String linkText = link.text();
                     System.out.println(linkText);
                     System.out.println(linkHref);
+                    userNode.courses.add(new CourseNode(linkText,linkHref));
                     coursetitle.add(linkText);
                     coursemap.put(linkText, linkHref);
                 }
@@ -67,17 +71,23 @@ public class NetworkUtils {
         }
     }
 
-    public static void activity_parser(Document doc){
+    public static void activity_parser(Document doc,CourseNode coursenode){
         try{
             Elements activities = doc.getElementsByAttributeValue("class","section main clearfix");
             for (Element activity : activities) {
                 Elements activity_name = activity.getElementsByAttributeValue("class","sectionname");
-                for (Element name : activity_name) { System.out.println(name.text());} //week activity name
+                for (Element name : activity_name) {
+                    ActivityNode activityNode = new ActivityNode(name.text());
+                    coursenode.activities.add(activityNode);
+                } //week activity name
                 Elements events = activity.getElementsByAttributeValue("class","activityinstance");
+                Iterator<ActivityNode> activityNodeIteratorIter = coursenode.activities.iterator();
                 for (Element event : events){
+                    WebNode webNode = new WebNode();
                     Elements event_links = event.getElementsByTag("a");
                     for (Element link : event_links) {
                         String linkHref = link.attr("href");
+                        webNode.uri = URI.create(linkHref);
                         System.out.println(linkHref);
                     }
                     Elements event_names = event.getElementsByAttributeValue("class","instancename");
@@ -88,11 +98,24 @@ public class NetworkUtils {
                             if (homework.ownText().equals("Assignment")){ishomework = true;}
                         }
                         String eventname = name.ownText();
-                        if(ishomework){
-                            System.out.println(eventname);
-                        }
-                        else{
-                            System.out.println(eventname);
+                        webNode.name = eventname;
+                        if(activityNodeIteratorIter.hasNext()){
+
+                            if(ishomework){
+                                HWNode hwnode = new HWNode();
+                                hwnode.name = eventname;
+                                hwnode.link = webNode.uri.toString();
+                                hwnode.description.add(webNode);
+                                System.out.println(eventname);
+                                activityNodeIteratorIter.next().events.add(hwnode);
+                            }
+                            else{
+                                SlidesNode slidesNode = new SlidesNode();
+                                slidesNode.name = eventname;
+                                slidesNode.description.add(webNode);
+                                System.out.println(eventname);
+                                activityNodeIteratorIter.next().events.add(slidesNode);
+                            }
                         }
                     }
                 }
@@ -103,14 +126,31 @@ public class NetworkUtils {
         }
     }
 
-    public static void course_grade_parser(Document doc){
+    public static void homework_detail_parser(Document doc,HWNode hwNode){
         try{
             Elements items = doc.getElementsByTag("tbody");
             for (Element item : items) {
-                Elements value_strings = item.getElementsByTag("tr");
-                for (Element value_string : value_strings){
-                    String value = value_string.text();
-                    System.out.println(value);
+                Elements value_keys = item.getElementsByTag("tr");
+                for (Element value_key : value_keys){
+                    Elements key_strings = value_key.getElementsByAttributeValue("class","cell c0");
+                    for (Element key_string : key_strings){
+                        switch (key_string.text()){
+                            case "Submission status":
+                                hwNode.SubmissionStatus = new TextNode(key_string.nextElementSibling().text());
+                                System.out.println(key_string.nextElementSibling().text());
+                                break;
+                            case "Grading status":
+                                hwNode.GradingStatus = new TextNode(key_string.nextElementSibling().text());
+                                System.out.println(key_string.nextElementSibling().text());
+                                break;
+                            case "Due date":
+                                hwNode.DueDate = new TextNode(key_string.nextElementSibling().text());
+                                System.out.println(key_string.nextElementSibling().text());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }catch (Exception e){
@@ -119,18 +159,22 @@ public class NetworkUtils {
         }
     }
 
-    public static void overview_grade_parser(Document doc){
+    public static void overview_grade_parser(Document doc,UserNode userNode){
         try{
             Elements course_grades_wrap = doc.getElementsByAttributeValue("id","overview-grade");
             for (Element course_grades : course_grades_wrap) {
                 Elements course_grade_page = course_grades.getElementsByAttributeValue("class","cell c0");
                 for (Element content : course_grade_page) {
                     Elements links = content.getElementsByTag("a");
+                    Iterator<CourseNode> courseNodeIterator = userNode.courses.iterator();
                     for (Element link : links) {
-                        String linkHref = link.attr("href");
-                        String linkText = link.text();
-                        System.out.println(linkText);
-                        System.out.println(linkHref);
+                        if(courseNodeIterator.hasNext()) {
+                            String linkHref = link.attr("href");
+                            String linkText = link.text();
+                            courseNodeIterator.next().gradepagelink = linkHref;
+                            System.out.println(linkText);
+                            System.out.println(linkHref);
+                        }
                     }
                 }
                 Elements course_grade = course_grades.getElementsByAttributeValue("class","cell c1");
@@ -146,24 +190,14 @@ public class NetworkUtils {
         }
     }
 
-    public static void homework_detail_parser(Document doc){
+    public static void course_grade_parser(Document doc,CourseNode courseNode){
         try{
             Elements items = doc.getElementsByTag("tbody");
             for (Element item : items) {
-                Elements value_blocks = item.getElementsByTag("tr");
-                for (Element value_block : value_blocks){
-                    Elements value_strings = value_block.getElementsByAttributeValue("class","cell c0");
-                    for (Element value_string : value_strings) {
-                        String value = value_string.text();
-                        if (value.equals("Submission status")){
-                            String submit_stat = value_block.text().replace("Submission status ","");
-                            System.out.println(submit_stat);
-                        }
-                        if (value.equals("Due date")){
-                            String due_date = value_block.text().replace("Due date ","");
-                            System.out.println(due_date);
-                        }
-                    }
+                Elements value_strings = item.getElementsByTag("tr");
+                for (Element value_string : value_strings){
+                    String value = value_string.text();
+                    System.out.println(value);
                 }
             }
         }catch (Exception e){
@@ -171,19 +205,5 @@ public class NetworkUtils {
             System.out.println(errorMessage);
         }
     }
-
-//    public static String uri_get_title(Document doc){
-//        try{
-//            String title = doc.title();
-//            return title;
-//
-//        }catch (Exception e){
-//            String errorMessage = e.getMessage();
-//            System.out.println(errorMessage);
-//            System.out.println("error in get title");
-//            return errorMessage;
-//        }
-//    }
-
 }
 

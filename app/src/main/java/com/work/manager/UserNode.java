@@ -3,6 +3,9 @@ package com.work.manager;
 import java.util.ArrayList;
 public class UserNode extends ITNode{
 	ArrayList<CourseNode> courses;
+	UserNode(){
+		this.courses = new ArrayList<>();
+	}
 	UserNode(String name, ArrayList<CourseNode> courses){
 		this.name = name;
 		this.courses = courses;
