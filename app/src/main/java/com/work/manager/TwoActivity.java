@@ -38,7 +38,7 @@ public class TwoActivity extends AppCompatActivity {
                     finish();
                 }else{
                     Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
+                    setResult(2, intent);
                     finish();
                 }
             }
