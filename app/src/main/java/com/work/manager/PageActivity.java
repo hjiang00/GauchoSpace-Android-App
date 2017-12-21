@@ -3,23 +3,11 @@ package com.work.manager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-
-import java.util.Map;
-
 import static com.work.manager.NetworkUtils.coursegrade;
-import static com.work.manager.NetworkUtils.coursename;
 import static com.work.manager.NetworkUtils.coursename2;
-import static com.work.manager.NetworkUtils.hwcount;
-import static com.work.manager.NetworkUtils.hwdeadlines;
-import static com.work.manager.NetworkUtils.hwdetail;
-import static com.work.manager.NetworkUtils.hwname;
 
 
 public class PageActivity extends AppCompatActivity {
@@ -39,6 +27,9 @@ public class PageActivity extends AppCompatActivity {
         int k = 0;
         switch (title) {
             case "Deadlines":
+                /*for (int i: hwcount)  Log.d("hwcount:", " "+i);
+                Log.d("hwname:", " "+hwname.size());
+                Log.d("hwdeadlines:", " "+hwdeadlines.size());
                  j = 0;
                  k = 0;
                 for (int i = 0; i < coursename.size(); i++) {
@@ -49,11 +40,18 @@ public class PageActivity extends AppCompatActivity {
                         j++;
                     }
                     k = j;
+                }*/
+                for (String coursename:ITVisitor.courses.keySet()){
+                    tv.append("\n"+coursename+"\n");
+                    for (String hwname:ITVisitor.courses.get(coursename).deadlines.keySet()){
+                        tv.append("     "+hwname + "\n");
+                        tv.append("         Due: "+ITVisitor.courses.get(coursename).deadlines.get(hwname).DueDate.name + "\n");
+                    }
                 }
             break;
 
             case "Assignments":
-                j = 0;
+                /*j = 0;
                 k = 0;
                 for (int i = 0; i < coursename.size(); i++) {
                     tv.append("\n" + coursename.get(i) + "\n");
@@ -63,6 +61,14 @@ public class PageActivity extends AppCompatActivity {
                         j++;
                     }
                     k = j;
+                }*/
+                for (String coursename:ITVisitor.courses.keySet()){
+                    tv.append("\n"+coursename+"\n");
+                    for (String hwname:ITVisitor.courses.get(coursename).deadlines.keySet()){
+                        tv.append("     "+hwname + "\n");
+                        tv.append("         Submission Status: "+ITVisitor.courses.get(coursename).deadlines.get(hwname).SubmissionStatus.name + "\n");
+                        tv.append("         Grading Status: "+ITVisitor.courses.get(coursename).deadlines.get(hwname).GradingStatus.name + "\n");
+                    }
                 }
                 break;
             case "Grades":
@@ -76,6 +82,13 @@ public class PageActivity extends AppCompatActivity {
                         tv.append("\n" + coursename2.get(i) + "\n");
                         tv.append(coursegrade.get(i) + "\n");
                 }
+                /*for (String coursename:ITVisitor.courses.keySet()){
+                    tv.append("\n"+coursename+"\n");
+                    for (String hwname:ITVisitor.courses.get(coursename).grades.keySet()){
+                        tv.append(hwname + "\n");
+                        tv.append("Due: "+ITVisitor.courses.get(coursename).grades.get(hwname) + "\n");
+                    }
+                }*/
                 break;
 
 

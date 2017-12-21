@@ -34,7 +34,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_et"
             android:hint="Username"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:inputType="text"/>
 
         <EditText
             android:id="@+id/et_password"
@@ -44,7 +45,7 @@
             android:background="@drawable/shape_et"
             android:hint="Password"
             android:inputType="textPassword"
-            android:maxLines="1"/>
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/btn_login"

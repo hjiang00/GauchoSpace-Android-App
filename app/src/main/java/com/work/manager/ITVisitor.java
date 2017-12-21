@@ -17,13 +17,13 @@ public class ITVisitor {
 	}
 	void VisitCourseNode (CourseNode node){
 		currentCourseInfo = new CourseInfo();
+		currentCourseInfo.grades = node.grades;
 		courses.put(node.name,currentCourseInfo);
 		node.visit_children(this);
 	}
 	void VisitSlidesNode(EventNode node){
 		currentEventInfo = new EventInfo();
 		currentEventInfo.weekid = currentWeek;
-
 		node.visit_children(this);
 	}
 	void VisitHWNode (HWNode node){

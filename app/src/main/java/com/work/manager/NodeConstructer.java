@@ -1,15 +1,14 @@
 package com.work.manager;
 
 import android.os.AsyncTask;
+
 import org.jsoup.nodes.Document;
 
-import java.util.ArrayList;
-
+import static com.work.manager.NetworkUtils.activity_parser;
 import static com.work.manager.NetworkUtils.cookie_retriever;
 import static com.work.manager.NetworkUtils.count;
 import static com.work.manager.NetworkUtils.course_grade_parser;
 import static com.work.manager.NetworkUtils.dashboard_parser;
-import static com.work.manager.NetworkUtils.activity_parser;
 import static com.work.manager.NetworkUtils.homework_detail_parser;
 import static com.work.manager.NetworkUtils.html_retriver;
 import static com.work.manager.NetworkUtils.hwcount;
@@ -51,9 +50,7 @@ public class NodeConstructer extends AsyncTask<String, Void, Void> {
             }
             System.out.println("create hwnode finished");
         }
-
-
-
+        new ITVisitor(userNode);
         return null;
     }
 }

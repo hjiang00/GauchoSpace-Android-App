@@ -3,10 +3,10 @@ package com.work.manager;
 import java.util.ArrayList;
 public class HWNode extends EventNode{
 	ArrayList<DescriptionNode> description;
-	TextNode SubmissionStatus;
-	TextNode GradingStatus;
-	TextNode DueDate;
-	String link;
+	TextNode SubmissionStatus = new TextNode("N/A");
+	TextNode GradingStatus = new TextNode("N/A");
+	TextNode DueDate = new TextNode("N/A");
+	String link = "";
 	HWNode(){
 		this.ifHWNode = true;
 		this.description = new ArrayList<>();

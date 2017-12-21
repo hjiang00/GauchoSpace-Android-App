@@ -6,7 +6,6 @@ public class CourseNode extends ITNode{
 	public String link;
 	public String gradepagelink;
 	public ArrayList<ActivityNode> activities;
-	public HashMap<String,String> deadlines;//
 	public HashMap<String,String> grades;
 	CourseNode(String name, String link){
 		this.name = name;

@@ -38,14 +38,18 @@ public class OneActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.et_password);
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
-        intent.putExtra("username", username);
-        intent.putExtra("password", password);
-        startActivity(intent);
+        if (username.length()==0) etUsername.setError("Please enter username!");
+        else if (password.length()==0) etPassword.setError("Please enter password!");
+        else {
+            intent.putExtra("username", username);
+            intent.putExtra("password", password);
+            startActivity(intent);
+        }
     }
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        android.os.Process.killProcess(android.os.Process.myPid());
-//    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+       android.os.Process.killProcess(android.os.Process.myPid());
+    }
 }

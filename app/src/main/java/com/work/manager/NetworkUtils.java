@@ -1,7 +1,5 @@
 package com.work.manager;
 
-import android.content.Intent;
-import java.net.URI;
 import android.util.Log;
 
 import org.jsoup.Connection;
@@ -10,10 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import static com.work.manager.TwoActivity.coursemap;
 import static com.work.manager.TwoActivity.coursetitle;
@@ -161,8 +158,9 @@ public class NetworkUtils {
                                 System.out.println(key_string.nextElementSibling().text());
                                 break;
                             case "Due date":
-                                hwNode.DueDate = new TextNode(key_string.nextElementSibling().text());
-                                System.out.println(key_string.nextElementSibling().text());
+                                if(key_string.nextElementSibling().text() != null && !key_string.nextElementSibling().text().isEmpty())  hwNode.DueDate = new TextNode(key_string.nextElementSibling().text());
+                                else hwNode.DueDate = new TextNode("N/A");
+                                System.out.println(hwNode.DueDate.name);
                                 hwdeadlines.add(hwNode.DueDate.name);
                                 break;
                             default:
