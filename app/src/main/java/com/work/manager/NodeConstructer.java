@@ -17,10 +17,11 @@ import static com.work.manager.TwoActivity.userNode;
 
 public class NodeConstructer extends AsyncTask<String, Void, Void> {
     public static String cookie;
-//    public static HWNode hwNode = new HWNode();
+    public static int COMPLETE;
 
     @Override
     protected Void doInBackground(String... params) {
+        COMPLETE = 0;
         cookie = cookie_retriever(params[0],params[1]);
         Document doc = html_retriver("https://gauchospace.ucsb.edu/courses/my/",cookie);
         dashboard_parser(doc,userNode);
@@ -49,6 +50,8 @@ public class NodeConstructer extends AsyncTask<String, Void, Void> {
                 }
             }
             System.out.println("create hwnode finished");
+            COMPLETE = 1;
+            System.out.println("set complete");
         }
         new ITVisitor(userNode);
         return null;

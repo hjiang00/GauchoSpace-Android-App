@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.work.manager.NodeConstructer.COMPLETE;
+
 public class TwoActivity extends AppCompatActivity {
     public static UserNode userNode = new UserNode();
     public static ArrayList<String> coursetitle = new ArrayList<>();
@@ -30,9 +32,15 @@ public class TwoActivity extends AppCompatActivity {
         mH.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent1 = new Intent(TwoActivity.this, DashboardActivity.class);
-                startActivity(intent1);
-                finish();
+                if (COMPLETE == 1) {
+                    Intent intent1 = new Intent(TwoActivity.this, DashboardActivity.class);
+                    startActivity(intent1);
+                    finish();
+                }else{
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
         },20000);
     }

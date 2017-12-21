@@ -3,12 +3,16 @@ package com.work.manager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 public class OneActivity extends AppCompatActivity {
@@ -43,7 +47,17 @@ public class OneActivity extends AppCompatActivity {
         else {
             intent.putExtra("username", username);
             intent.putExtra("password", password);
-            startActivity(intent);
+            startActivityForResult(intent, 2);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2){
+            if(resultCode == TwoActivity.RESULT_OK){
+                Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
