@@ -37,8 +37,6 @@ public class DashboardActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.list_view);
         imgBtn = (TextView) findViewById(R.id.img_btn);
-//        coursetitle.add("CS184");
-//        coursemap.put(coursetitle.get(0),"http://www.cs.ucsb.edu/~holl/CS184/");
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, coursetitle);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);

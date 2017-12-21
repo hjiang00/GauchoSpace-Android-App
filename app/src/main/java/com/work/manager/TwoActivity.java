@@ -42,6 +42,6 @@ public class TwoActivity extends AppCompatActivity {
                     finish();
                 }
             }
-        },20000);
+        },25000);
     }
 }

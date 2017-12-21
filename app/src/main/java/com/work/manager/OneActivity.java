@@ -53,15 +53,9 @@ public class OneActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2){
             if(resultCode == 2){
-                Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Login failed. Please check your username/password and Internet", Toast.LENGTH_LONG).show();
             }
             else android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
-/*
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-       android.os.Process.killProcess(android.os.Process.myPid());
-    }*/
 }

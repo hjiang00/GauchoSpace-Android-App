@@ -18,9 +18,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Locale;
 
-/**
- * Created by lijinfeng on 2017/12/5.
- */
 
 public class AddCourseActivity extends AppCompatActivity {
 
@@ -51,13 +48,6 @@ public class AddCourseActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if(item.getItemId() == android.R.id.home){
-//            finish();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 
 }

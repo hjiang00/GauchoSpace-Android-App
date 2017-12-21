@@ -54,7 +54,7 @@ public class NetworkUtils {
             System.out.println(errorMessage);
             Document doc2 = Jsoup.parse("<html><head><title>First parse</title></head>"
                     + "<body><p>Parsed HTML into a doc.</p></body></html>");
-            System.out.println("error");
+//            System.out.println("error");
             return doc2;
         }
     }
@@ -67,8 +67,8 @@ public class NetworkUtils {
                 for (Element link : links) {
                     String linkHref = link.attr("href");
                     String linkText = link.text();
-                    System.out.println(linkText);
-                    System.out.println(linkHref);
+//                    System.out.println(linkText);
+//                    System.out.println(linkHref);
                     userNode.courses.add(new CourseNode(linkText,linkHref));
                     coursename.add(linkText);
                     coursetitle.add(linkText);
@@ -98,7 +98,7 @@ public class NetworkUtils {
                     for (Element link : event_links) {
                         String linkHref = link.attr("href");
                         webNode.uri = URI.create(linkHref);
-                        System.out.println(linkHref);
+//                        System.out.println(linkHref);
                     }
                     Elements event_names = event.getElementsByAttributeValue("class","instancename");
                     for (Element name : event_names) {
@@ -117,7 +117,7 @@ public class NetworkUtils {
                                 hwnode.name = eventname;
                                 hwnode.link = webNode.uri.toString();
                                 hwnode.description.add(webNode);
-                                System.out.println(eventname);
+//                                System.out.println(eventname);
                                 hwname.add(eventname);
                                 activityNodeIteratorIter.next().events.add(hwnode);
                             }
@@ -125,7 +125,7 @@ public class NetworkUtils {
                                 SlidesNode slidesNode = new SlidesNode();
                                 slidesNode.name = eventname;
                                 slidesNode.description.add(webNode);
-                                System.out.println(eventname);
+//                                System.out.println(eventname);
                                 activityNodeIteratorIter.next().events.add(slidesNode);
                             }
                         }
@@ -150,17 +150,17 @@ public class NetworkUtils {
                         switch (key_string.text()){
                             case "Submission status":
                                 hwNode.SubmissionStatus = new TextNode(key_string.nextElementSibling().text());
-                                System.out.println(key_string.nextElementSibling().text());
+//                                System.out.println(key_string.nextElementSibling().text());
                                 hwdetail.add(hwNode.SubmissionStatus.name);
                                 break;
                             case "Grading status":
                                 hwNode.GradingStatus = new TextNode(key_string.nextElementSibling().text());
-                                System.out.println(key_string.nextElementSibling().text());
+//                                System.out.println(key_string.nextElementSibling().text());
                                 break;
                             case "Due date":
                                 if(key_string.nextElementSibling().text() != null && !key_string.nextElementSibling().text().isEmpty())  hwNode.DueDate = new TextNode(key_string.nextElementSibling().text());
                                 else hwNode.DueDate = new TextNode("N/A");
-                                System.out.println(hwNode.DueDate.name);
+//                                System.out.println(hwNode.DueDate.name);
                                 hwdeadlines.add(hwNode.DueDate.name);
                                 break;
                             default:
@@ -188,8 +188,8 @@ public class NetworkUtils {
                             String linkHref = link.attr("href");
                             String linkText = link.text();
                             courseNodeIterator.next().gradepagelink = linkHref;
-                            System.out.println(linkText);
-                            System.out.println(linkHref);
+//                            System.out.println(linkText);
+//                            System.out.println(linkHref);
                             coursename2.add(linkText);
                         }
                     }
@@ -198,7 +198,7 @@ public class NetworkUtils {
                 for (Element grade : course_grade) {
                     String grade_string = grade.text();
                     if(grade_string != null && !grade_string.isEmpty()) {
-                        System.out.println(grade_string);
+//                        System.out.println(grade_string);
                         coursegrade.add(grade_string);
                     }
                 }
@@ -217,7 +217,7 @@ public class NetworkUtils {
                 Elements value_strings = item.getElementsByTag("tr");
                 for (Element value_string : value_strings){
                     String value = value_string.text();
-                    System.out.println(value);
+//                    System.out.println(value);
                 }
             }
         }catch (Exception e){

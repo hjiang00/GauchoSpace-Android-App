@@ -16,11 +16,9 @@ public class CourseNameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name);
-        //getSupportActionBar().setTitle("Dashboard");
         getSupportActionBar().setTitle("Course Name");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.list_view);
-       // imgBtn = (TextView) findViewById(R.id.img_btn);
         listView.setAdapter(adapter);
     }
 
